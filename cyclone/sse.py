@@ -61,13 +61,13 @@ class SSEHandler(RequestHandler):
         assert isinstance(message, bytes)
 
         if eid:
-            self.transport.write("id: %s\n" % eid)
+            self.transport.write(b"id: " + eid.encode("utf-8") + b"\n")
         if event:
-            self.transport.write("event: %s\n" % event)
+            self.transport.write(b"event: " + event.encode("utf-8") + b"\n")
         if retry:
-            self.transport.write("retry: %s\n" % retry)
+            self.transport.write(b"retry: " + retry.encode("utf-8") + b"\n")
 
-        self.transport.write("data: %s\n\n" % message)
+        self.transport.write(b"data: " + message + b"\n\n")
 
     def _execute(self, transforms, *args, **kwargs):
         self._transforms = []  # transforms
